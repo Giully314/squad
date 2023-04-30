@@ -1,0 +1,62 @@
+paths:
+  data_dir: "data"
+  output_dir: "results"
+  checkpoint_dir: "checkpoint" #directory where to save the model state if good performance
+  test_out_dir: "test"
+
+
+generic:
+  device: "cuda"
+  fix_random: true
+  debug: true
+
+model:
+  char_cnn_kernel_width: 5
+  char_cnn_channels: 100
+  hidden_dim: 100
+  contextual_layers: 1
+  contextual_dropout: 0 
+  attention_dropout: 0
+  modeling_layers: 2
+  modeling_dropout: 0
+
+
+dataloader:
+  batch_size: 64
+  shuffle: True
+  num_workers: 4
+  persistent_workers: true
+  pin_memory: True
+
+
+dataset:
+  train_file: "train.npz"
+  valid_file: "valid.npz"
+  test_file: "test.npz"
+  word_emb_file: "word_emb.json"
+  char_emb_file: "char_emb.json"
+  word_to_idx_file: "word2idx.json"
+  char_to_idx_file: "char2idx.json"
+
+
+optimizer:
+  lr: 3e-4 
+  beta1: 0.9 
+  beta2: 0.999
+  weight_decay: 0.01
+  fused: true 
+
+scheduler: # cosine decay used
+  min_lr: 0.0000001
+  t_max: 100
+
+train:
+  epochs: 12
+  evaluate_every_n_epochs: null
+  start_from_checkpoint: false 
+  gradient_clipping_max_norm: null
+
+test:
+  should_test: true
+  num_visuals: 100
+  test_file: "train_eval.json"
